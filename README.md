@@ -1,5 +1,10 @@
 # Claude Code Excellence Audit v1.0
 
+[![GitHub stars](https://img.shields.io/github/stars/romiluz13/claude-code-excellence-audit?style=social)](https://github.com/romiluz13/claude-code-excellence-audit)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Updated](https://img.shields.io/badge/Updated-December%202025-blue)](https://github.com/romiluz13/claude-code-excellence-audit)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-Certified-purple)](https://code.claude.com)
+
 > **Audit your Claude Code setup. Get a score. Reach 100/100.**
 
 Created by **[Rom Iluz](https://github.com/romiluz13)** | 
@@ -12,7 +17,7 @@ Created by **[Rom Iluz](https://github.com/romiluz13)** |
 
 A self-diagnostic tool that audits your Claude Code project setup and provides:
 
-- **Score out of 100** (+5 bonus) with detailed breakdown
+- **Score out of 100** with detailed breakdown
 - **Gap analysis** - what you're missing
 - **Ready-to-use fixes** - copy-paste solutions
 - **Action plan** - prioritized steps to excellence
@@ -59,16 +64,14 @@ curl -o ~/.claude/skills/excellence-audit/SKILL.md https://raw.githubusercontent
 |----------|--------|----------------|
 | **Memory** | 25 | CLAUDE.md files, build commands, code style, architecture |
 | **Modular Rules** | 15 | `.claude/rules/*.md`, path-scoping, organization |
-| **Settings** | 15 | Permissions allow/deny lists, sandbox, env vars |
-| **Subagents** | 15 | Custom agents in `.claude/agents/`, tool restrictions |
-| **Slash Commands** | 10 | Custom commands in `.claude/commands/`, arguments |
-| **Hooks** | 10 | PreToolUse, PostToolUse, Stop hooks |
+| **Settings** | 15 | Permissions allow/deny lists, sandbox, env vars, attribution |
+| **Subagents** | 15 | Custom agents with `permissionMode`, `skills`, proactive descriptions |
+| **Slash Commands** | 10 | Custom commands with arguments, `model` override |
+| **Hooks** | 10 | All hook types including SessionStart, Stop, prompt-based hooks |
 | **MCP Servers** | 5 | Project `.mcp.json` OR user-level in `~/.claude.json` |
-| **Skills** | 5 | Model-invoked capabilities in `.claude/skills/` |
-| **BONUS: Plugins** | +5 | Enabled plugins in settings |
-| **BONUS: Advanced** | +10 | Extended thinking, status line, IDE, terminal setup, model aliases |
+| **Skills** | 5 | Model-invoked capabilities with `allowed-tools` restriction |
 
-**Total: 100 points + 15 bonus = 115 maximum**
+**Total: 100 points maximum**
 
 ---
 
@@ -97,9 +100,12 @@ curl -o ~/.claude/skills/excellence-audit/SKILL.md https://raw.githubusercontent
 
 ### Custom Subagents
 - Agent definitions in `.claude/agents/`
-- Tool restrictions
-- Model selection
-- Resumable agents
+- Tool restrictions (`tools:` field)
+- Model selection (`model:` field)
+- Permission modes (`permissionMode:` field)
+- Skills auto-loading (`skills:` field)
+- Resumable agents (via `agentId`)
+- Built-in subagents: `general-purpose`, `Plan`, `Explore` (Haiku)
 
 ### Slash Commands
 - Custom commands in `.claude/commands/`
@@ -131,6 +137,32 @@ curl -o ~/.claude/skills/excellence-audit/SKILL.md https://raw.githubusercontent
 - Plugin marketplace
 - Enabled/disabled plugins
 - Plugin-provided commands, agents, skills
+- `extraKnownMarketplaces` for team distribution
+
+### Output Styles (NEW December 2025)
+- Built-in: `Default`, `Explanatory`, `Learning`
+- Custom styles in `.claude/output-styles/`
+- `keep-coding-instructions` option
+- Non-coding workflows support
+
+### Checkpointing (NEW December 2025)
+- Automatic edit tracking
+- `/rewind` command for quick recovery
+- Conversation and code restoration
+- Session-level safety net
+
+### Headless Mode (NEW December 2025)
+- `claude -p` for programmatic execution
+- `--output-format json|stream-json`
+- `--allowedTools` and `--disallowedTools`
+- `--mcp-config` for MCP server loading
+- Session management (`--resume`, `--continue`)
+
+### Status Line (NEW December 2025)
+- Custom script-based status lines
+- JSON input with model, cost, context info
+- Git branch integration
+- Token usage tracking
 
 ---
 
@@ -159,8 +191,6 @@ CATEGORY BREAKDOWN:
 7. MCP Servers              [██████████░░░░░░░░░░]  5/5
 8. Skills                   [░░░░░░░░░░░░░░░░░░░░]  0/5
 
-BONUS:
-+ Plugins                   [████████████████████] +5/5
 ```
 
 ---
@@ -169,12 +199,11 @@ BONUS:
 
 | Score | Grade | Status |
 |-------|-------|--------|
-| 95-105 | A+ | LEGENDARY - Maximum excellence! |
-| 90-94 | A+ | EXCELLENT - State of the art! |
-| 80-89 | A | GREAT - Minor improvements possible |
-| 70-79 | B | GOOD - Some features missing |
-| 60-69 | C | FAIR - Significant gaps |
-| 50-59 | D | NEEDS WORK - Many features missing |
+| 95-100 | A+ | EXCELLENT - State of the art! |
+| 85-94 | A | GREAT - Minor improvements possible |
+| 75-84 | B | GOOD - Some features missing |
+| 65-74 | C | FAIR - Significant gaps |
+| 50-64 | D | NEEDS WORK - Many features missing |
 | 0-49 | F | POOR - Basic setup required |
 
 ---
@@ -195,7 +224,8 @@ claude-code-excellence-audit/
     │   │   ├── agents/
     │   │   ├── commands/
     │   │   ├── skills/
-    │   │   └── settings.json
+    │   │   ├── output-styles/         # NEW: Custom output styles
+    │   │   └── settings.json          # Includes hooks, statusLine, attribution
     │   └── .mcp.json
     └── templates/
         └── QUICK-START.md             # Quick templates for fast setup
@@ -224,6 +254,52 @@ claude-code-excellence-audit/
 
 ---
 
+## Share Your Score!
+
+Got your score? Share it with the community!
+
+### LinkedIn Post Template:
+```
+Just audited my Claude Code setup with the Excellence Audit!
+
+My Score: XX/100 | Grade: [GRADE]
+
+Are you maximizing your Claude Code potential?
+Try it yourself: github.com/romiluz13/claude-code-excellence-audit
+
+#ClaudeCode #AI #DeveloperTools #ClaudeCodeAudit
+```
+
+### Twitter/X Template:
+```
+My Claude Code Excellence Score: XX/100 [GRADE]
+
+How do you score? /audit your setup now:
+github.com/romiluz13/claude-code-excellence-audit
+
+#ClaudeCode #AI
+```
+
+### Achievement Badges
+- **A+ (95-100)**: Claude Code Master
+- **A (85-94)**: Excellence Achiever
+- **B (75-84)**: Advanced User
+
+**Tag me on [LinkedIn](https://www.linkedin.com/in/rom-iluz/) when you share your score!**
+
+---
+
+## Hall of Fame - Perfect Scores
+
+Share your 100/100 score and get featured here!
+
+| Developer | Score | Project | Link |
+|-----------|-------|---------|------|
+| @romiluz13 | 100/100 | claude-code-excellence-audit | [Example](./examples/perfect-setup/) |
+| *Your name here* | | | |
+
+---
+
 ## Contributing
 
 Found a gap in the audit? Have better templates? PRs welcome!
@@ -235,10 +311,16 @@ Found a gap in the audit? Have better templates? PRs welcome!
 
 ## Related Resources
 
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
-- [Claude Code Memory](https://docs.anthropic.com/en/docs/claude-code/memory)
-- [Claude Code Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks)
-- [Claude Code MCP](https://docs.anthropic.com/en/docs/claude-code/mcp)
+- [Claude Code Documentation](https://code.claude.com/docs/en/overview)
+- [Memory Management](https://code.claude.com/docs/en/memory)
+- [Hooks Reference](https://code.claude.com/docs/en/hooks)
+- [MCP Integration](https://code.claude.com/docs/en/mcp)
+- [Subagents](https://code.claude.com/docs/en/subagents)
+- [Agent Skills](https://code.claude.com/docs/en/skills)
+- [Plugins](https://code.claude.com/docs/en/plugins)
+- [Output Styles](https://code.claude.com/docs/en/output-styles)
+- [Settings Reference](https://code.claude.com/docs/en/settings)
+- [Headless Mode](https://code.claude.com/docs/en/headless)
 
 ---
 

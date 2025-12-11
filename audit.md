@@ -34,18 +34,18 @@ cat ./.mcp.json 2>/dev/null || echo "NOT FOUND"
 
 Read any found files to assess quality.
 
-## Step 2: Score (100 Points)
+## Step 2: Score (100 Points Maximum)
 
 | Category | Points | Check |
 |----------|--------|-------|
 | Memory | 25 | CLAUDE.md exists, has commands, style, architecture |
 | Rules | 15 | .claude/rules/ with 3+ files, path-scoping |
-| Settings | 15 | Permissions allow/deny lists, sandbox |
-| Subagents | 15 | Custom agents with tool restrictions |
+| Settings | 15 | Permissions allow/deny lists, sandbox, attribution |
+| Subagents | 15 | Custom agents with permissionMode, skills fields |
 | Commands | 10 | Custom slash commands with arguments |
-| Hooks | 10 | PostToolUse, PreToolUse, Stop hooks |
+| Hooks | 10 | All hooks including SessionStart, Stop, prompt-based |
 | MCP | 5 | .mcp.json with servers |
-| Skills | 5 | Custom skills with SKILL.md |
+| Skills | 5 | Custom skills with SKILL.md and allowed-tools |
 
 ## Step 3: Output Report
 
@@ -91,6 +91,14 @@ HIGH IMPACT (15 min, +XX pts):
 □ [Action] - [description]
 
 TIME TO 100/100: ~X minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SHARE YOUR SCORE:
+Post on LinkedIn/X with #ClaudeCodeAudit
+github.com/romiluz13/claude-code-excellence-audit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 **Begin the audit now.**

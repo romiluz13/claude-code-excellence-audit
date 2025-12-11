@@ -1,6 +1,6 @@
 ---
 name: project-helper
-description: Helps with common project tasks like setup, configuration, and troubleshooting. Use when user asks about project structure, dependencies, or common issues.
+description: Helps with common project tasks like setup, configuration, and troubleshooting. Use when user asks about project structure, dependencies, common issues, or says "help me understand this project".
 allowed-tools: Read, Bash, Glob, Grep
 ---
 

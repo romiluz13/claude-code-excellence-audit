@@ -24,7 +24,8 @@
       "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(rm -rf:*)"
-    ]
+    ],
+    "additionalDirectories": ["../shared-libs/"]
   },
   "env": {
     "NODE_ENV": "development"
@@ -36,11 +37,54 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '✅ File modified'",
+            "command": "echo 'File modified'",
             "timeout": 5
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Running command...'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Welcome to the project!'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Verify that the user's request has been fully completed. If all tasks are done, respond with {\"decision\":\"approve\"}. If more work is needed, respond with {\"decision\":\"block\",\"reason\":\"specify what remains\"}."
+          }
+        ]
+      }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
+  },
+  "attribution": {
+    "commit": "Generated with Claude Code\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "Generated with Claude Code"
   }
 }

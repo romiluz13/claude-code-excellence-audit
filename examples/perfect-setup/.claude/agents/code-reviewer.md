@@ -1,8 +1,10 @@
 ---
 name: code-reviewer
-description: Reviews code changes for quality, security, and best practices. Use PROACTIVELY after any code modifications or before commits.
+description: Reviews code changes for quality, security, and best practices. Use PROACTIVELY after any code modifications or before commits. MUST BE USED before creating pull requests.
 tools: Read, Grep, Glob, Bash
 model: inherit
+permissionMode: default
+skills: safe-reader
 ---
 
 # Code Reviewer Agent

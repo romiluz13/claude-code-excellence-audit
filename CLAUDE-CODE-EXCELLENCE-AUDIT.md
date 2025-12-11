@@ -96,13 +96,22 @@ cat ~/.zshrc ~/.bashrc 2>/dev/null | grep -i "claude\|CLAUDE" | head -5 || echo 
 
 # Check project type
 ls package.json pyproject.toml Cargo.toml go.mod pom.xml build.gradle 2>/dev/null
+
+# Check output styles (NEW December 2025)
+ls ./.claude/output-styles/ ~/.claude/output-styles/ 2>/dev/null || echo "NO CUSTOM OUTPUT STYLES"
+
+# Check for headless mode scripts
+grep -r "claude -p" . --include="*.sh" --include="*.yml" --include="*.yaml" 2>/dev/null | head -3 || echo "NO HEADLESS SCRIPTS"
+
+# Check for advanced agent features (permissionMode, skills fields)
+grep -l "permissionMode\|skills:" ./.claude/agents/*.md 2>/dev/null || echo "NO ADVANCED AGENT FIELDS"
 ```
 
 Also read any found configuration files to understand their content quality.
 
 ---
 
-## SCORING RUBRIC (100 Points Total)
+## SCORING RUBRIC (100 Points Maximum)
 
 ### Category 1: Memory Configuration (25 points)
 
@@ -156,13 +165,15 @@ Also read any found configuration files to understand their content quality.
 
 | Check | Points | Criteria |
 |-------|--------|----------|
-| `.claude/agents/` directory exists | 3 | Agent directory in place |
-| At least 2 custom agents | 4 | Project-specific agents |
-| Agents have specific tool restrictions | 4 | `tools:` field properly configured |
-| Agent descriptions are specific | 4 | Clear triggers for automatic invocation |
+| `.claude/agents/` directory exists | 2 | Agent directory in place |
+| At least 2 custom agents | 3 | Project-specific agents |
+| Agents have specific tool restrictions | 3 | `tools:` field properly configured |
+| Agent descriptions are specific | 3 | Clear triggers for automatic invocation |
+| Advanced: `permissionMode` or `skills` fields | 2 | Uses `permissionMode:`, `skills:`, or `model:` |
+| Proactive language in descriptions | 2 | "Use PROACTIVELY" or "MUST BE USED" triggers |
 
 **Scoring Guide:**
-- 15/15: Well-designed agents with proper restrictions
+- 15/15: Well-designed agents with proper restrictions and advanced fields
 - 8-14: Some agents, could be more specialized
 - 1-7: Minimal agents
 - 0: No custom agents
@@ -186,13 +197,14 @@ Also read any found configuration files to understand their content quality.
 
 | Check | Points | Criteria |
 |-------|--------|----------|
-| Any hooks configured | 3 | Hooks section in settings |
-| PostToolUse hooks (lint/format) | 3 | Auto-formatting on file changes |
+| Any hooks configured | 2 | Hooks section in settings |
+| PostToolUse hooks (lint/format) | 2 | Auto-formatting on file changes |
 | PreToolUse hooks (validation) | 2 | Command validation |
-| Stop hooks (completion check) | 2 | Verify task completion |
+| Stop/SubagentStop hooks | 2 | Verify task completion |
+| Advanced hooks (SessionStart, PermissionRequest, Notification) | 2 | Using newer hook types or prompt-based hooks |
 
 **Scoring Guide:**
-- 10/10: Comprehensive automation with hooks
+- 10/10: Comprehensive automation with hooks including advanced types
 - 5-9: Some hooks
 - 1-4: Minimal hooks
 - 0: No hooks
@@ -217,51 +229,25 @@ Also read any found configuration files to understand their content quality.
 
 | Check | Points | Criteria |
 |-------|--------|----------|
-| `.claude/skills/` directory exists | 2 | Skills directory in place |
-| At least 1 skill with SKILL.md | 3 | Model-invoked capabilities |
+| `.claude/skills/` directory exists | 1 | Skills directory in place |
+| At least 1 skill with SKILL.md | 2 | Model-invoked capabilities |
+| Skill has `allowed-tools` restriction | 1 | Tool access properly scoped |
+| Skill description includes trigger terms | 1 | Clear "Use when..." language for discovery |
 
 **Scoring Guide:**
-- 5/5: Custom skills for automatic capabilities
+- 5/5: Custom skills with proper tool restrictions and discovery triggers
 - 2-4: Basic skills
 - 0-1: No skills
 
 ---
 
-### BONUS: Plugins (Up to +5 points)
-
-| Check | Bonus | Criteria |
-|-------|-------|----------|
-| Plugins enabled in settings | +2 | Has `enabledPlugins` with active plugins |
-| 3+ useful plugins active | +3 | Multiple plugins enhancing workflow |
-
-**Note**: Plugins are optional but can significantly enhance productivity.
-Check `~/.claude/settings.json` for `enabledPlugins` section.
-
-### BONUS: Advanced Setup (Up to +10 points)
-
-| Check | Bonus | Criteria |
-|-------|-------|----------|
-| Extended thinking configured | +2 | `MAX_THINKING_TOKENS` or `alwaysThinkingEnabled` set |
-| Custom status line | +2 | `statusLine` configured in settings |
-| IDE integration active | +2 | VS Code or JetBrains extension configured |
-| Terminal setup (Shift+Enter) | +2 | `/terminal-setup` completed |
-| Model aliases configured | +2 | Custom model aliases defined |
-
-**Note**: These are power-user features that maximize productivity.
-
----
-
 ## SCORING TOTAL
 
-**Base Score**: 100 points (Categories 1-8)
-**Bonus Plugins**: Up to +5 points
-**Bonus Advanced**: Up to +10 points
-**Maximum Possible**: 115 points
+**Maximum Score**: 100 points (Categories 1-8)
 
 | Score | Grade | Status |
 |-------|-------|--------|
-| 105-115 | S | LEGENDARY - Maximum mastery! |
-| 95-104 | A+ | EXCELLENT - State of the art! |
+| 95-100 | A+ | EXCELLENT - State of the art! |
 | 85-94 | A | GREAT - Minor improvements possible |
 | 75-84 | B | GOOD - Some features missing |
 | 65-74 | C | FAIR - Significant gaps |
@@ -300,10 +286,6 @@ CATEGORY BREAKDOWN:
 6. Hooks                    [░░░░░░░░░░░░░░░░░░░░] XX/10
 7. MCP Servers              [████████░░░░░░░░░░░░] XX/5
 8. Skills                   [░░░░░░░░░░░░░░░░░░░░] XX/5
-
-BONUS:
-+ Plugins                   [████████████████░░░░] +X/5
-+ Advanced Setup            [████████░░░░░░░░░░░░] +X/10
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -528,9 +510,122 @@ Create a pull request to $1 with:
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Session started'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if all tasks are complete based on user request: $ARGUMENTS. Return {\"decision\":\"approve\"} if done, or {\"decision\":\"block\",\"reason\":\"why to continue\"} if more work needed."
+          }
+        ]
+      }
     ]
   }
 }
+```
+
+### Template: Advanced Subagent (with new fields)
+
+```markdown
+# .claude/agents/data-analyst.md
+---
+name: data-analyst
+description: Analyzes data and creates reports. Use PROACTIVELY when user asks about data analysis, queries, or reporting.
+tools: Bash, Read, Write, Glob, Grep
+model: sonnet
+permissionMode: acceptEdits
+skills: data-helper
+---
+
+You are a data analysis expert. When invoked:
+
+1. Understand the data source and requirements
+2. Write efficient queries or scripts
+3. Analyze and summarize results
+4. Present findings clearly
+
+Focus on actionable insights and clear visualizations.
+```
+
+### Template: Skill with Tool Restrictions
+
+```markdown
+# .claude/skills/safe-reader/SKILL.md
+---
+name: safe-reader
+description: Read-only file access for code review. Use when reviewing code, checking configurations, or analyzing codebase structure without making changes.
+allowed-tools: Read, Grep, Glob
+---
+
+# Safe Reader Skill
+
+You provide read-only access to the codebase for analysis and review.
+
+## When to Activate
+- "Review this code"
+- "Check the configuration"
+- "Analyze the structure"
+- "What does this file do?"
+
+## Instructions
+1. Use Read to view file contents
+2. Use Grep to search patterns
+3. Use Glob to find files
+4. Never modify files - read-only mode
+```
+
+### Template: Custom Output Style
+
+```markdown
+# .claude/output-styles/explanatory-coder.md
+---
+name: Explanatory Coder
+description: Explains code decisions while building features
+keep-coding-instructions: true
+---
+
+# Explanatory Coder Mode
+
+When writing or modifying code, always explain:
+1. Why this approach was chosen
+2. Alternative approaches considered
+3. Trade-offs made
+4. Key patterns used
+
+Include "Insight" blocks between code sections to educate the user.
+```
+
+### Template: Status Line Script
+
+```bash
+#!/bin/bash
+# ~/.claude/statusline.sh
+input=$(cat)
+
+MODEL=$(echo "$input" | jq -r '.model.display_name')
+DIR=$(echo "$input" | jq -r '.workspace.current_dir' | xargs basename)
+COST=$(echo "$input" | jq -r '.cost.total_cost_usd // 0')
+
+# Git branch if available
+BRANCH=""
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    BRANCH=" | $(git branch --show-current)"
+fi
+
+echo "[$MODEL] $DIR$BRANCH | \$${COST}"
 ```
 
 ---
@@ -542,7 +637,7 @@ End with a prioritized action plan:
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║                     ACTION PLAN                                   ║
-║              To reach 100/100 Excellence Score                    ║
+║               To reach 100/100 Excellence Score                   ║
 ╚══════════════════════════════════════════════════════════════════╝
 
 QUICK WINS (5 minutes each, +XX points total):
@@ -558,6 +653,14 @@ ADVANCED (Optional, for power users):
 □ [Action 2] - [description]
 
 ESTIMATED TIME TO 100/100: [X] minutes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SHARE YOUR SCORE:
+Post on LinkedIn/X with #ClaudeCodeAudit
+github.com/romiluz13/claude-code-excellence-audit
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ---
@@ -566,11 +669,11 @@ ESTIMATED TIME TO 100/100: [X] minutes
 
 | Score | Grade | Status |
 |-------|-------|--------|
-| 90-100 | A+ | EXCELLENT - State of the art! |
-| 80-89 | A | GREAT - Minor improvements possible |
-| 70-79 | B | GOOD - Some features missing |
-| 60-69 | C | FAIR - Significant gaps |
-| 50-59 | D | NEEDS WORK - Many features missing |
+| 95-100 | A+ | EXCELLENT - State of the art! |
+| 85-94 | A | GREAT - Minor improvements possible |
+| 75-84 | B | GOOD - Some features missing |
+| 65-74 | C | FAIR - Significant gaps |
+| 50-64 | D | NEEDS WORK - Many features missing |
 | 0-49 | F | POOR - Basic setup required |
 
 ---
