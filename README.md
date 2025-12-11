@@ -2,7 +2,7 @@
 
 > **Audit your Claude Code setup. Get a score. Reach 100/100.**
 
-Created by **[Rom Iluz](https://github.com/romiluz13)** | AI Community Leader, Israel | MongoDB Developer Advocate
+Created by **[Rom Iluz](https://github.com/romiluz13)** | 
 
 **Last Updated**: December 11, 2025 - Covers ALL Claude Code features
 
