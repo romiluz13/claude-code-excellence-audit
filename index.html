@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Excellence Audit | Score Your Setup</title>
+    <meta name="description" content="Audit your Claude Code setup. Get a score out of 100. Reach excellence with actionable recommendations.">
+
+    <!-- Fonts - Claude uses Styrene (proprietary) but we'll use similar alternatives -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Claude Brand Colors */
+            --bg-cream: #FAF9F7;
+            --bg-warm: #F5F4F0;
+            --bg-surface: #FFFFFF;
+            --bg-elevated: #FFFFFE;
+
+            --accent-terracotta: #D97757;
+            --accent-terracotta-dark: #C4623F;
+            --accent-terracotta-light: #E8A08A;
+            --accent-sand: #E4CE97;
+
+            --text-primary: #1A1915;
+            --text-secondary: #5D5D5A;
+            --text-muted: #8C8C89;
+
+            --border-light: rgba(0, 0, 0, 0.08);
+            --border-medium: rgba(0, 0, 0, 0.12);
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+
+            /* Typography */
+            --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-mono: 'Source Code Pro', 'SF Mono', Consolas, monospace;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-cream);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(250, 249, 247, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-terracotta);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-cta {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 20px;
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            background: #2d2d28;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 120px 0 80px;
+            overflow: hidden;
+        }
+
+        /* Organic curved background shape */
+        .hero-bg-shape {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140%;
+            height: 500px;
+            background: var(--accent-terracotta);
+            border-radius: 50% 50% 0 0;
+            opacity: 0.9;
+            z-index: 0;
+        }
+
+        .hero-bg-shape::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0C13.4 0 0 13.4 0 30s13.4 30 30 30 30-13.4 30-30S46.6 0 30 0zm0 55c-13.8 0-25-11.2-25-25S16.2 5 30 5s25 11.2 25 25-11.2 25-25 25z' fill='%23C4623F' fill-opacity='0.15'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: #22C55E;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-family: var(--font-serif);
+            font-size: clamp(42px, 8vw, 72px);
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero-title .accent {
+            color: var(--accent-terracotta);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 520px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--text-primary);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #2d2d28;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid var(--border-medium);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-warm);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal Preview */
+        .terminal-preview {
+            margin-top: 64px;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        .terminal {
+            background: #1E1E1E;
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 720px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px;
+            background: #2D2D2D;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #FF5F57; }
+        .terminal-dot.yellow { background: #FEBC2E; }
+        .terminal-dot.green { background: #28C840; }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #888;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.9;
+            color: #E5E5E5;
+        }
+
+        .terminal-line {
+            opacity: 0;
+            animation: terminalLine 0.4s ease-out forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.6s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.8s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.0s; }
+        .terminal-line:nth-child(4) { animation-delay: 1.2s; }
+        .terminal-line:nth-child(5) { animation-delay: 1.4s; }
+        .terminal-line:nth-child(6) { animation-delay: 1.6s; }
+        .terminal-line:nth-child(7) { animation-delay: 1.8s; }
+
+        .prompt {
+            color: var(--accent-terracotta);
+        }
+
+        .command {
+            color: #FFFFFF;
+        }
+
+        .output {
+            color: #A0A0A0;
+        }
+
+        .score-output {
+            display: inline-block;
+            padding: 2px 10px;
+            background: rgba(217, 119, 87, 0.2);
+            border-radius: 4px;
+            color: var(--accent-terracotta-light);
+            font-weight: 600;
+        }
+
+        .grade-a {
+            color: #4ADE80;
+        }
+
+        /* What's Audited Section */
+        .audit-section {
+            padding: 120px 0;
+            background: var(--bg-surface);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-terracotta);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 16px auto 0;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--bg-cream);
+            border: 1px solid var(--border-light);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-medium);
+        }
+
+        .category-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+
+        .category-points {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-terracotta);
+        }
+
+        .category-title {
+            font-family: var(--font-serif);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .category-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* How It Works Section */
+        .how-section {
+            padding: 120px 0;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: var(--bg-surface);
+            border: 2px solid var(--accent-terracotta);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent-terracotta);
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-family: var(--font-serif);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .step-code {
+            margin-top: 16px;
+            background: #1E1E1E;
+            border-radius: 10px;
+            padding: 14px 18px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--accent-terracotta-light);
+            text-align: left;
+            overflow-x: auto;
+        }
+
+        /* Score Section */
+        .score-section {
+            padding: 120px 0;
+            background: var(--bg-surface);
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .score-visual {
+            text-align: center;
+        }
+
+        .score-ring-container {
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .score-ring-container svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-ring-bg {
+            fill: none;
+            stroke: var(--bg-warm);
+            stroke-width: 12;
+        }
+
+        .score-ring-progress {
+            fill: none;
+            stroke: var(--accent-terracotta);
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 754;
+            stroke-dashoffset: 754;
+            animation: scoreRing 2s ease-out 0.5s forwards;
+        }
+
+        .score-number {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-value {
+            font-family: var(--font-serif);
+            font-size: 64px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .score-content h2 {
+            font-family: var(--font-serif);
+            font-size: 40px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .score-content p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.7;
+        }
+
+        /* Grades Table */
+        .grades-section {
+            padding: 120px 0;
+        }
+
+        .grades-table {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .grade-row {
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .grade-row:hover {
+            transform: translateX(8px);
+            border-color: var(--accent-terracotta);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .grade-letter {
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: 700;
+            width: 70px;
+            color: var(--grade-color);
+        }
+
+        .grade-range {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            color: var(--text-muted);
+            width: 90px;
+        }
+
+        .grade-status {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .grade-row:nth-child(1) { --grade-color: #22C55E; }
+        .grade-row:nth-child(2) { --grade-color: #22C55E; }
+        .grade-row:nth-child(3) { --grade-color: #3B82F6; }
+        .grade-row:nth-child(4) { --grade-color: #F59E0B; }
+        .grade-row:nth-child(5) { --grade-color: #F97316; }
+        .grade-row:nth-child(6) { --grade-color: #EF4444; }
+
+        /* CTA Section - Dark like Claude's footer */
+        .cta-section {
+            padding: 120px 0 80px;
+            background: #1A1915;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 5vw, 44px);
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+            font-style: italic;
+        }
+
+        .cta-desc {
+            font-size: 16px;
+            color: #9A9A97;
+            max-width: 440px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .install-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #2D2D28;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+        }
+
+        .install-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #FFFFFF;
+            padding: 8px 16px;
+            background: #3D3D38;
+            border-radius: 6px;
+        }
+
+        .install-code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--accent-terracotta-light);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            color: #9A9A97;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            color: #FFFFFF;
+            background: #3D3D38;
+        }
+
+        .cta-link {
+            display: block;
+            font-size: 14px;
+            color: var(--accent-terracotta-light);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .cta-link:hover {
+            color: var(--accent-terracotta);
+        }
+
+        /* CTA Card */
+        .cta-card {
+            background: #2D2D28;
+            border-radius: 16px;
+            padding: 40px;
+        }
+
+        .cta-card-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 24px;
+            color: #9A9A97;
+        }
+
+        .cta-card h3 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .cta-card p {
+            font-size: 15px;
+            color: #9A9A97;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        .cta-card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            background: var(--accent-terracotta);
+        }
+
+        .cta-card .btn-primary:hover {
+            background: var(--accent-terracotta-dark);
+        }
+
+        /* Footer - Dark */
+        footer {
+            padding: 40px 0;
+            background: #1A1915;
+            border-top: 1px solid #2D2D28;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: #6B6B68;
+        }
+
+        .footer-text a {
+            color: var(--accent-terracotta-light);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: #9A9A97;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes terminalLine {
+            from {
+                opacity: 0;
+                transform: translateX(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        @keyframes scoreRing {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .score-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-bg-shape {
+                height: 300px;
+                bottom: -50px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cta-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .cta-content {
+                text-align: center;
+            }
+
+            .cta-desc {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .install-box {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">/</div>
+                <span>Excellence Audit</span>
+            </a>
+            <div class="nav-links">
+                <a href="#categories">Categories</a>
+                <a href="#how">How It Works</a>
+                <a href="#grades">Grades</a>
+                <a href="https://github.com/romiluz13/claude-code-excellence-audit" target="_blank">GitHub</a>
+            </div>
+            <a href="#cta" class="nav-cta">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-shape"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <div class="hero-badge-dot"></div>
+                    <span>Updated December 2025</span>
+                </div>
+                <h1 class="hero-title">
+                    Score your<br>
+                    <span class="accent">> Claude Code</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Audit your setup. Find the gaps. Get actionable recommendations
+                    to reach 100/100 excellence.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#cta" class="btn-primary">
+                        <span>Run Audit</span>
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/romiluz13/claude-code-excellence-audit" class="btn-secondary" target="_blank">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+
+                <!-- Terminal Preview -->
+                <div class="terminal-preview">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                            <div class="terminal-title">claude-code ~ audit</div>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line"><span class="prompt">></span> <span class="command">/audit</span></div>
+                            <div class="terminal-line"><span class="output">Analyzing Claude Code configuration...</span></div>
+                            <div class="terminal-line"><span class="output">Checking memory, rules, settings, agents...</span></div>
+                            <div class="terminal-line">&nbsp;</div>
+                            <div class="terminal-line"><span class="score-output">SCORE: 92/100</span></div>
+                            <div class="terminal-line"><span class="output">Grade: </span><span class="grade-a">A (GREAT)</span></div>
+                            <div class="terminal-line"><span class="output">3 quick wins to reach 100</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="audit-section" id="categories">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Scoring Categories</div>
+                <h2 class="section-title">What Gets Audited</h2>
+                <p class="section-subtitle">8 categories covering all Claude Code features. Each with specific checks and point values.</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-card reveal">
+                    <div class="category-icon">&#128221;</div>
+                    <div class="category-points">25 pts</div>
+                    <h3 class="category-title">Memory</h3>
+                    <p class="category-desc">CLAUDE.md with build commands, code style, and architecture notes.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#128208;</div>
+                    <div class="category-points">15 pts</div>
+                    <h3 class="category-title">Modular Rules</h3>
+                    <p class="category-desc">Path-scoped rules in .claude/rules/ for security and testing.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#128274;</div>
+                    <div class="category-points">15 pts</div>
+                    <h3 class="category-title">Settings</h3>
+                    <p class="category-desc">Permission allow/deny lists and sandbox configuration.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#129302;</div>
+                    <div class="category-points">15 pts</div>
+                    <h3 class="category-title">Subagents</h3>
+                    <p class="category-desc">Custom agents with tool restrictions and proactive triggers.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#9889;</div>
+                    <div class="category-points">10 pts</div>
+                    <h3 class="category-title">Commands</h3>
+                    <p class="category-desc">Custom slash commands with arguments and descriptions.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#128268;</div>
+                    <div class="category-points">10 pts</div>
+                    <h3 class="category-title">Hooks</h3>
+                    <p class="category-desc">Automated workflows with PreToolUse and PostToolUse.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#128279;</div>
+                    <div class="category-points">5 pts</div>
+                    <h3 class="category-title">MCP Servers</h3>
+                    <p class="category-desc">External integrations via Model Context Protocol.</p>
+                </div>
+                <div class="category-card reveal">
+                    <div class="category-icon">&#127919;</div>
+                    <div class="category-points">5 pts</div>
+                    <h3 class="category-title">Skills</h3>
+                    <p class="category-desc">Model-invoked capabilities with auto-discovery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-section" id="how">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Getting Started</div>
+                <h2 class="section-title">How It Works</h2>
+            </div>
+            <div class="steps-container">
+                <div class="step reveal">
+                    <div class="step-number">1</div>
+                    <h3>Install</h3>
+                    <p>Add the audit as a global slash command.</p>
+                    <div class="step-code">curl -o ~/.claude/commands/audit.md ...</div>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">2</div>
+                    <h3>Run</h3>
+                    <p>Open Claude Code and run the command.</p>
+                    <div class="step-code">/audit</div>
+                </div>
+                <div class="step reveal">
+                    <div class="step-number">3</div>
+                    <h3>Improve</h3>
+                    <p>Get your score and copy-paste fixes.</p>
+                    <div class="step-code">SCORE: 92/100 | Grade: A</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Score Section -->
+    <section class="score-section">
+        <div class="container">
+            <div class="score-grid">
+                <div class="score-visual reveal">
+                    <div class="score-ring-container">
+                        <svg viewBox="0 0 256 256">
+                            <circle class="score-ring-bg" cx="128" cy="128" r="110"/>
+                            <circle class="score-ring-progress" cx="128" cy="128" r="110"/>
+                        </svg>
+                        <div class="score-number">
+                            <span class="score-value">100</span>
+                            <span class="score-label">points possible</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="score-content reveal">
+                    <h2>What's your score?</h2>
+                    <p>
+                        The audit checks 8 categories across 25+ configuration points.
+                        From memory files to MCP servers, hooks to custom agents.
+                        Most setups score between 30-60 on their first audit.
+                    </p>
+                    <a href="#grades" class="btn-secondary">
+                        See Grade Scale
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grades Section -->
+    <section class="grades-section" id="grades">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Scoring Scale</div>
+                <h2 class="section-title">Grade Breakdown</h2>
+            </div>
+            <div class="grades-table reveal">
+                <div class="grade-row">
+                    <div class="grade-letter">A+</div>
+                    <div class="grade-range">95-100</div>
+                    <div class="grade-status">Excellent - State of the art!</div>
+                </div>
+                <div class="grade-row">
+                    <div class="grade-letter">A</div>
+                    <div class="grade-range">85-94</div>
+                    <div class="grade-status">Great - Minor improvements</div>
+                </div>
+                <div class="grade-row">
+                    <div class="grade-letter">B</div>
+                    <div class="grade-range">75-84</div>
+                    <div class="grade-status">Good - Some features missing</div>
+                </div>
+                <div class="grade-row">
+                    <div class="grade-letter">C</div>
+                    <div class="grade-range">65-74</div>
+                    <div class="grade-status">Fair - Significant gaps</div>
+                </div>
+                <div class="grade-row">
+                    <div class="grade-letter">D</div>
+                    <div class="grade-range">50-64</div>
+                    <div class="grade-status">Needs work - Many missing</div>
+                </div>
+                <div class="grade-row">
+                    <div class="grade-letter">F</div>
+                    <div class="grade-range">0-49</div>
+                    <div class="grade-status">Poor - Basic setup needed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section - Dark -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="cta-grid">
+                <div class="cta-content reveal">
+                    <h2 class="cta-title">Score your setup.<br>Reach excellence.</h2>
+                    <p class="cta-desc">Use the audit command in any project to get your score and actionable recommendations.</p>
+                    <div class="install-box">
+                        <span class="install-label">Install</span>
+                        <code class="install-code">curl -o ~/.claude/commands/audit.md ...</code>
+                        <button class="copy-btn" onclick="copyInstall()" title="Copy full install command">
+                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="https://github.com/romiluz13/claude-code-excellence-audit" class="cta-link" target="_blank">Or read the documentation</a>
+                </div>
+                <div class="cta-card reveal">
+                    <svg class="cta-card-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <h3>Get your excellence score</h3>
+                    <p>Audit your Claude Code setup and receive a detailed breakdown with specific, ready-to-use fixes.</p>
+                    <a href="https://github.com/romiluz13/claude-code-excellence-audit" class="btn-primary" target="_blank">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-text">
+                Created by <a href="https://github.com/romiluz13" target="_blank">Rom Iluz</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/romiluz13/claude-code-excellence-audit" target="_blank">GitHub</a>
+                <a href="https://github.com/romiluz13/claude-code-excellence-audit/blob/main/examples/perfect-setup" target="_blank">Examples</a>
+                <a href="https://docs.anthropic.com/en/docs/claude-code" target="_blank">Claude Docs</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll reveal
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 100) {
+                    el.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', reveal);
+        reveal();
+
+        // Copy install command - full command stored here
+        const fullInstallCmd = 'mkdir -p ~/.claude/commands && curl -o ~/.claude/commands/audit.md https://raw.githubusercontent.com/romiluz13/claude-code-excellence-audit/main/audit.md';
+
+        function copyInstall() {
+            navigator.clipboard.writeText(fullInstallCmd).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>';
+                setTimeout(() => btn.innerHTML = originalHTML, 2000);
+            });
+        }
+
+        // Animate score
+        const scoreEl = document.querySelector('.score-value');
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                let n = 0;
+                const timer = setInterval(() => {
+                    n += 2;
+                    if (n >= 100) { n = 100; clearInterval(timer); }
+                    scoreEl.textContent = n;
+                }, 20);
+                observer.disconnect();
+            }
+        }, { threshold: 0.5 });
+        observer.observe(document.querySelector('.score-visual'));
+    </script>
+</body>
+</html>

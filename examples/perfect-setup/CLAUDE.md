@@ -1,6 +1,6 @@
 # My Project
 
-> A 100/100 Claude Code Excellence Setup Example
+> An A+ Claude Code Excellence Setup Example (Project-Level)
 
 ## Build & Test Commands
 

@@ -7,7 +7,7 @@
 
 > **Audit your Claude Code setup. Get a score. Reach 100/100.**
 
-Created by **[Rom Iluz](https://github.com/romiluz13)** | 
+Created by **[Rom Iluz](https://github.com/romiluz13)**
 
 **Last Updated**: December 11, 2025 - Covers ALL Claude Code features
 
@@ -182,14 +182,14 @@ curl -o ~/.claude/skills/excellence-audit/SKILL.md https://raw.githubusercontent
 CATEGORY BREAKDOWN:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. Memory Configuration      [██████████████░░░░░░] 18/25
-2. Modular Rules            [████░░░░░░░░░░░░░░░░]  4/15
-3. Settings & Permissions   [██████████████████░░] 14/15
-4. Custom Subagents         [░░░░░░░░░░░░░░░░░░░░]  0/15
-5. Slash Commands           [██████████░░░░░░░░░░]  5/10
+1. Memory Configuration      [██████████████████░░] 23/25
+2. Modular Rules            [██████████░░░░░░░░░░]  8/15
+3. Settings & Permissions   [████████████████████] 15/15
+4. Custom Subagents         [██████████░░░░░░░░░░]  8/15
+5. Slash Commands           [████████░░░░░░░░░░░░]  4/10
 6. Hooks                    [░░░░░░░░░░░░░░░░░░░░]  0/10
-7. MCP Servers              [██████████░░░░░░░░░░]  5/5
-8. Skills                   [░░░░░░░░░░░░░░░░░░░░]  0/5
+7. MCP Servers              [████████████████████]  5/5
+8. Skills                   [████████░░░░░░░░░░░░]  4/5
 
 ```
 
@@ -217,14 +217,15 @@ claude-code-excellence-audit/
 ├── audit.md                           # Slash command version (/audit)
 ├── SKILL.md                           # Auto-invoke skill version
 └── examples/
-    ├── perfect-setup/                 # Example 100/100 setup
+    ├── perfect-setup/                 # Example A+ setup (project-level)
     │   ├── CLAUDE.md
     │   ├── .claude/
     │   │   ├── rules/
     │   │   ├── agents/
     │   │   ├── commands/
     │   │   ├── skills/
-    │   │   ├── output-styles/         # NEW: Custom output styles
+    │   │   ├── scripts/               # Custom scripts (statusline, etc.)
+    │   │   ├── output-styles/         # Custom output styles
     │   │   └── settings.json          # Includes hooks, statusLine, attribution
     │   └── .mcp.json
     └── templates/
@@ -295,7 +296,7 @@ Share your 100/100 score and get featured here!
 
 | Developer | Score | Project | Link |
 |-----------|-------|---------|------|
-| @romiluz13 | 100/100 | claude-code-excellence-audit | [Example](./examples/perfect-setup/) |
+| @romiluz13 | 95/100 | claude-code-excellence-audit | [Example](./examples/perfect-setup/) |
 | *Your name here* | | | |
 
 ---
