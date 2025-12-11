@@ -66,8 +66,9 @@ curl -o ~/.claude/skills/excellence-audit/SKILL.md https://raw.githubusercontent
 | **MCP Servers** | 5 | Project `.mcp.json` OR user-level in `~/.claude.json` |
 | **Skills** | 5 | Model-invoked capabilities in `.claude/skills/` |
 | **BONUS: Plugins** | +5 | Enabled plugins in settings |
+| **BONUS: Advanced** | +10 | Extended thinking, status line, IDE, terminal setup, model aliases |
 
-**Total: 100 points + 5 bonus = 105 maximum**
+**Total: 100 points + 15 bonus = 115 maximum**
 
 ---
 

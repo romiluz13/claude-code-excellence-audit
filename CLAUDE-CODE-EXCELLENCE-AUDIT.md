@@ -82,6 +82,18 @@ cat ~/.claude/settings.json 2>/dev/null | grep -A 50 '"enabledPlugins"' | head -
 # Check extended thinking setting
 cat ~/.claude/settings.json 2>/dev/null | grep -i "thinking" || echo "DEFAULT THINKING"
 
+# Check status line configuration
+cat ~/.claude/settings.json 2>/dev/null | grep -A 10 '"statusLine"' || echo "DEFAULT STATUS LINE"
+
+# Check model aliases
+cat ~/.claude/settings.json 2>/dev/null | grep -i "model" | head -5 || echo "DEFAULT MODEL"
+
+# Check IDE integration
+ls ~/.claude/ide* 2>/dev/null || echo "NO IDE CONFIG"
+
+# Check terminal setup (shift+enter)
+cat ~/.zshrc ~/.bashrc 2>/dev/null | grep -i "claude\|CLAUDE" | head -5 || echo "NO TERMINAL SETUP"
+
 # Check project type
 ls package.json pyproject.toml Cargo.toml go.mod pom.xml build.gradle 2>/dev/null
 ```
@@ -225,6 +237,37 @@ Also read any found configuration files to understand their content quality.
 **Note**: Plugins are optional but can significantly enhance productivity.
 Check `~/.claude/settings.json` for `enabledPlugins` section.
 
+### BONUS: Advanced Setup (Up to +10 points)
+
+| Check | Bonus | Criteria |
+|-------|-------|----------|
+| Extended thinking configured | +2 | `MAX_THINKING_TOKENS` or `alwaysThinkingEnabled` set |
+| Custom status line | +2 | `statusLine` configured in settings |
+| IDE integration active | +2 | VS Code or JetBrains extension configured |
+| Terminal setup (Shift+Enter) | +2 | `/terminal-setup` completed |
+| Model aliases configured | +2 | Custom model aliases defined |
+
+**Note**: These are power-user features that maximize productivity.
+
+---
+
+## SCORING TOTAL
+
+**Base Score**: 100 points (Categories 1-8)
+**Bonus Plugins**: Up to +5 points
+**Bonus Advanced**: Up to +10 points
+**Maximum Possible**: 115 points
+
+| Score | Grade | Status |
+|-------|-------|--------|
+| 105-115 | S | LEGENDARY - Maximum mastery! |
+| 95-104 | A+ | EXCELLENT - State of the art! |
+| 85-94 | A | GREAT - Minor improvements possible |
+| 75-84 | B | GOOD - Some features missing |
+| 65-74 | C | FAIR - Significant gaps |
+| 50-64 | D | NEEDS WORK - Many features missing |
+| 0-49 | F | POOR - Basic setup required |
+
 ---
 
 ## OUTPUT FORMAT
@@ -260,6 +303,7 @@ CATEGORY BREAKDOWN:
 
 BONUS:
 + Plugins                   [████████████████░░░░] +X/5
++ Advanced Setup            [████████░░░░░░░░░░░░] +X/10
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
